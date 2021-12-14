@@ -5,7 +5,7 @@ const ROWS = [
   ["tab"].concat("qwertyuiop[]\\".split('')),
   ["caps"].concat("asdfghjkl;'".split('')).concat("return"),
   ["shift-left"].concat("zxcvbnm,./".split('')).concat("shift-right"),
-  ["fn", "control", "option-left", "command-left", "space", "command-right", "option-right"]
+  ["fn", "control", "option-left", "command-left", "space", "command-right", "option-right", "arrows"]
 ];
 
 const DATA = [
