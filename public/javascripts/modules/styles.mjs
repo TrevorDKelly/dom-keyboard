@@ -1,0 +1,67 @@
+let cssString = "";
+
+function addCSSClass(name, styles) {
+  let string = `.${name} {`;
+  Object.keys(styles).forEach(attribute => {
+    let attributeName = convertToCssString(attribute);
+    let value = styles[attribute];
+
+    string += `${attributeName}: ${value}; `;
+  });
+
+  cssString += string + "}\n";
+};
+
+function convertToCssString(name) {
+  let capital = name.match(/[A-Z]/);
+  while (capital) {
+    let arr = name.split('');
+    let lowercase = capital[0].toLowerCase();
+    arr[capital.index] = `-${lowercase}`;
+    name = arr.join('')
+    capital = name.match(/[A-Z]/);
+  }
+  return name;
+}
+
+const KEY_CSS = {
+  backgroundColor: "black",
+  borderRadius: "0.25em",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+}
+
+const CONTAINER_CSS = {
+  position: "relative",
+  paddingBottom: "34%",
+  fontSize: "2.5vw",
+  color: "white",
+};
+
+const ALL_ROWS_CSS = {
+  position: "absolute",
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+  display: "flex",
+  flexDirection: "column",
+};
+
+const ROW_CSS = {
+  display: "flex",
+  gap: "1%",
+  padding: "0.5%",
+  alignItems: "stretch",
+  alignContent: "stretch",
+  justifyContent: "space-between",
+  height: "20%",
+}
+
+addCSSClass('keyboard-key', KEY_CSS);
+addCSSClass('keyboard-container', CONTAINER_CSS);
+addCSSClass('keyboard-all-rows', ALL_ROWS_CSS);
+addCSSClass('keyboard-single-row', ROW_CSS);
+
+export default cssString;
