@@ -1,6 +1,6 @@
 import Key from "./modules/key.mjs";
 import Layout from "./modules/layout.mjs";
-import cssString from "./modules/styles.js";
+import cssString from "./modules/styles.mjs";
 
 function createCSSClasses() {
   let style = document.createElement('style');
