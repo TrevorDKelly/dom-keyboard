@@ -30,6 +30,8 @@ const KEY_CSS = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  borderBottom: "0.3vw solid grey",
+  boxShadow: "-0.2vw 0.2vw lightskyblue",
 }
 
 const TWO_SYMBOL_KEYS_CSS = {
