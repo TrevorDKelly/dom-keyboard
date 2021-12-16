@@ -32,10 +32,21 @@ const KEY_CSS = {
   alignItems: "center",
 }
 
+const TWO_SYMBOL_KEYS_CSS = {
+  flexDirection: "column",
+  justifyContent: "space-around",
+}
+
+const COMMAND_KEYS_CSS = {
+  fontSize: "0.6em",
+  flexDirection: "column",
+  justifyContent: "space-around",
+}
+
 const CONTAINER_CSS = {
   position: "relative",
   paddingBottom: "34%",
-  fontSize: "2.5vw",
+  font: "2vw sans-serif",
   color: "white",
 };
 
@@ -63,5 +74,7 @@ addCSSClass('keyboard-key', KEY_CSS);
 addCSSClass('keyboard-container', CONTAINER_CSS);
 addCSSClass('keyboard-all-rows', ALL_ROWS_CSS);
 addCSSClass('keyboard-single-row', ROW_CSS);
+addCSSClass('keyboard-key-command', COMMAND_KEYS_CSS);
+addCSSClass('keyboard-key-number, .keyboard-key-special', TWO_SYMBOL_KEYS_CSS);
 
 export default cssString;
