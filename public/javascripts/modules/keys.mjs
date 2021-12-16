@@ -26,7 +26,7 @@ const DATA = [
   },
   {
     characters: ["shift"].concat("zxcvbnm,./".split('')).concat("shift"),
-    shifts: [null].concat("ZXCVBNM<>?".split('')).concat("enter"),
+    shifts: [null].concat("ZXCVBNM<>?".split('')).concat(null),
     flexes: [2.413].concat(new Array(10).fill(1)).concat(2.413),
   },
   {
