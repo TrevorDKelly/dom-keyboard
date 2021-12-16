@@ -28,6 +28,8 @@ Layout.prototype = {
       });
       this.rowsContainer.appendChild(rowNode);
     });
+    let arrowKeysDiv = this.keys.makeArrows();
+    this.rowsContainer.lastElementChild.appendChild(arrowKeysDiv);
   },
 }
 

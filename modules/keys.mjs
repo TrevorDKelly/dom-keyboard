@@ -5,7 +5,7 @@ const ROWS = [
   ["tab"].concat("qwertyuiop[]\\".split('')),
   ["caps"].concat("asdfghjkl;'".split('')).concat("return"),
   ["shift-left"].concat("zxcvbnm,./".split('')).concat("shift-right"),
-  ["fn", "control", "option-left", "command-left", "space", "command-right", "option-right", "arrows"]
+  ["fn", "control", "option-left", "command-left", "space", "command-right", "option-right"]
 ];
 
 const DATA = [
@@ -32,9 +32,11 @@ const DATA = [
   {
     characters: ["fn", "control", "option", "command", null, "command", "option"],
     shifts: [null, null, "alt", "\u2318", null, "\u2318", "alt", null],
-    flexes: [1, 1, 1, 1.24, 5.66, 1.25, 1, 3.33],
+    flexes: [1, 1, 1, 1.24, 5.66, 1.25, 1],
   },
 ];
+
+const ARROWS_BOX_FLEX = 3.33;
 
 function Keys() {
   this.rows = ROWS;
@@ -58,6 +60,13 @@ Keys.prototype = {
         this.allKeys.push(new Key(keyData));
       });
     });
+  },
+
+  makeArrows() {
+    let arrowsDiv = document.createElement('div');
+    arrowsDiv.style.flex = ARROWS_BOX_FLEX;
+
+    return arrowsDiv;
   },
 
   getKey(key) {
