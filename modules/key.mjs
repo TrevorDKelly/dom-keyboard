@@ -1,7 +1,7 @@
 function Key({ key, character, shift, flex }) {
   this.id = key;
   this.node = document.createElement('div');
-  this.node.classList.add('keyboard-key');
+  this.node.classList.add('keyboard-key-up');
   this.node.style.flex = flex;
   this.character = character;
   this.shift = shift;

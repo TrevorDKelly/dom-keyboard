@@ -3,9 +3,9 @@ import Key from "./key.mjs"
 const ROWS = [
   "`1234567890-=".split('').concat("delete"),
   ["tab"].concat("qwertyuiop[]\\".split('')),
-  ["caps"].concat("asdfghjkl;'".split('')).concat("return"),
+  ["caps"].concat("asdfghjkl;'".split('')).concat("enter"),
   ["shift-left"].concat("zxcvbnm,./".split('')).concat("shift-right"),
-  ["fn", "control", "option-left", "command-left", "space", "command-right", "option-right"]
+  ["fn", "control", "option-left", "command-left", " ", "command-right", "option-right"]
 ];
 
 const DATA = [
@@ -69,7 +69,7 @@ Keys.prototype = {
 
   makeArrows() {
     let arrowsDiv = document.createElement('div');
-    arrowsDiv.classList.add("keyboard-arrows-container");//
+    arrowsDiv.classList.add("keyboard-arrows-container");
 
     let topDiv = document.createElement('div');
     this.makeTopArrow(topDiv);

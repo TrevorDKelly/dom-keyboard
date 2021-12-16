@@ -20,10 +20,23 @@ function makeLayout(width, id) {
 function JSKeyboard(width, id) {
   createCSSClasses();
   this.node = makeLayout(width, id);
+  this.addEvents();
 }
 
 JSKeyboard.prototype = {
   constructor: Keyboard,
+
+  addEvents() {
+    document.addEventListener('keypress', pressKey);
+  }
+}
+
+function pressKey(e) {
+  let key = document.querySelector(`[data-key='${e.key.toLowerCase()}']`);
+  setTimeout(() => {
+    key.classList.remove('keyboard-key-down');
+  }, 200);
+  key.classList.add('keyboard-key-down');
 }
 
 export default JSKeyboard;

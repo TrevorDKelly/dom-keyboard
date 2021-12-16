@@ -24,7 +24,7 @@ function convertToCssString(name) {
   return name;
 }
 
-const KEY_CSS = {
+const KEY_UP_CSS = {
   backgroundColor: "black",
   borderRadius: "0.25em",
   display: "flex",
@@ -32,6 +32,15 @@ const KEY_CSS = {
   alignItems: "center",
   borderBottom: "0.3vw solid grey",
   boxShadow: "-0.2vw 0.2vw lightskyblue",
+}
+
+const KEY_DOWN_CSS = {
+  position: 'relative',
+  top: "0.2vw",
+  left: "-0.2vw",
+  boxShadow: "0 0 lightskyblue",
+  borderBottom: "0 solid grey",
+  transition: "all 0.2s",
 }
 
 const TWO_SYMBOL_KEYS_CSS = {
@@ -86,7 +95,8 @@ const ARROW_ROW_CSS = {
   justifyContent: "space-around",
 }
 
-addCSSClass('keyboard-key', KEY_CSS);
+addCSSClass('keyboard-key-up', KEY_UP_CSS);
+addCSSClass('keyboard-key-down', KEY_DOWN_CSS);
 addCSSClass('keyboard-container', CONTAINER_CSS);
 addCSSClass('keyboard-all-rows', ALL_ROWS_CSS);
 addCSSClass('keyboard-single-row', ROW_CSS);
