@@ -14,10 +14,8 @@ Key.prototype = {
 
   setContent(content) {
     this.node.dataset.key = content;
-    if (this.type === "letter") {
+    if (this.type === "letter" || this.type === "arrow") {
       this.node.innerHTML = this.character.toUpperCase();
-    } else if (this.type === "arrows") {
-      // all arrows should not be a key. only the 4 separate keys
     } else {
       let topChar = document.createElement("p");
       let bottomChar = document.createElement("p");
@@ -35,8 +33,8 @@ Key.prototype = {
 };
 
 function getType(key) {
-  if (key === "arrows") {
-    return "arrows";
+  if (key.includes("arrow")) {
+    return "arrow";
   } else if (key.length > 1) {
     return "command";
   } else if (/[a-z]/.test(key)) {

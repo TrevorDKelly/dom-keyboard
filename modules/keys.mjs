@@ -36,7 +36,12 @@ const DATA = [
   },
 ];
 
-const ARROWS_BOX_FLEX = 3.33;
+const UNICODE_ARROWS = {
+  "up-arrow": "\u25B2",
+  "down-arrow": "\u25BC",
+  "left-arrow": "\u25C0",
+  "right-arrow": "\u25BA",
+};
 
 function Keys() {
   this.rows = ROWS;
@@ -64,14 +69,51 @@ Keys.prototype = {
 
   makeArrows() {
     let arrowsDiv = document.createElement('div');
-    arrowsDiv.style.flex = ARROWS_BOX_FLEX;
+    arrowsDiv.classList.add("keyboard-arrows-container");//
 
+    let topDiv = document.createElement('div');
+    this.makeTopArrow(topDiv);
+
+    let bottomDiv = document.createElement('div');
+    this.makeBottomArrows(bottomDiv);
+
+    topDiv.classList.add('keyboard-arrow-row');
+    bottomDiv.classList.add('keyboard-arrow-row');
+
+    arrowsDiv.appendChild(topDiv);
+    arrowsDiv.appendChild(bottomDiv);
     return arrowsDiv;
+  },
+
+  makeTopArrow(topDiv) {
+    let key = this.makeArrow("up-arrow");
+    topDiv.appendChild(key.node);
+  },
+
+  makeBottomArrows(bottomDiv) {
+    let keyNames = ["left-arrow", "down-arrow", "right-arrow"];
+    keyNames.forEach( keyName => {
+      let key = this.makeArrow(keyName);
+      bottomDiv.appendChild(key.node);
+    });
+  },
+
+  makeArrow(name) {
+    let arrow = {
+      key: name,
+      character: UNICODE_ARROWS[name],
+      shift: null,
+      flex: 0.3,
+    }
+
+    let key = new Key(arrow);
+    this.allKeys.push(key);
+    return key;
   },
 
   getKey(key) {
     return this.allKeys.find( k => k.id === key);
-  }
+  },
 }
 
 export default Keys;

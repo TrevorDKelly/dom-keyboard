@@ -70,11 +70,27 @@ const ROW_CSS = {
   height: "20%",
 }
 
+const ARROWS_CONTAINER_CSS = {
+  flex: 3.33,
+  font: "0.5em serif",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "stretch",
+}
+
+const ARROW_ROW_CSS = {
+  flex: 1,
+  display: "flex",
+  justifyContent: "space-around",
+}
+
 addCSSClass('keyboard-key', KEY_CSS);
 addCSSClass('keyboard-container', CONTAINER_CSS);
 addCSSClass('keyboard-all-rows', ALL_ROWS_CSS);
 addCSSClass('keyboard-single-row', ROW_CSS);
 addCSSClass('keyboard-key-command', COMMAND_KEYS_CSS);
 addCSSClass('keyboard-key-number, .keyboard-key-special', TWO_SYMBOL_KEYS_CSS);
+addCSSClass('keyboard-arrows-container', ARROWS_CONTAINER_CSS);
+addCSSClass('keyboard-arrow-row', ARROW_ROW_CSS);
 
 export default cssString;
