@@ -1,19 +1,24 @@
-function Key({ key, character, shift, flex }) {
-  this.id = key;
+const CONTROL_KEYS = [
+  "Tab", "Backspace", "Enter", "ShiftLeft", "ShiftRight", "ControlLeft", "fn",
+  "AltLeft", "MetaLeft", "MetaRight", "AltRight", "CapsLock"
+];
+
+function Key({ code, character, shift, flex }) {
+  this.code = code;
   this.node = document.createElement('div');
   this.node.classList.add('keyboard-key-up');
   this.node.style.flex = flex;
   this.character = character;
   this.shift = shift;
   this.setType();
-  this.setContent(key);
+  this.setContent(code);
 }
 
 Key.prototype = {
   constructor: Key,
 
-  setContent(content) {
-    this.node.dataset.key = content;
+  setContent(code) {
+    this.node.dataset.key = code;
     if (this.type === "letter" || this.type === "arrow") {
       this.node.innerHTML = this.character.toUpperCase();
     } else {
@@ -27,20 +32,20 @@ Key.prototype = {
   },
 
   setType() {
-    this.type = getType(this.id);
+    this.type = getType(this.code);
     this.node.classList.add(`keyboard-key-${this.type}`);
   },
 };
 
-function getType(key) {
-  if (key.includes("arrow")) {
+function getType(code) {
+  if (code.includes("Arrow")) {
     return "arrow";
-  } else if (key.length > 1) {
-    return "command";
-  } else if (/[a-z]/.test(key)) {
+  } else if (code.includes("Key")) {
     return "letter";
-  } else if (/[0-9]/.test(key)) {
+  } else if (code.includes("Digit")) {
     return "number";
+  } else if (CONTROL_KEYS.includes(code)) {
+    return 'control';
   } else {
     return "special";
   }

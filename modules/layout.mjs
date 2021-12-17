@@ -20,7 +20,7 @@ Layout.prototype = {
   constructor: Layout,
 
   fillKeys() {
-    this.keys.rows.forEach( row => {
+    this.keys.codesByRow.forEach( row => {
       let rowNode = document.createElement('div');
       rowNode.classList.add('keyboard-single-row')
       row.forEach( key => {
@@ -31,16 +31,6 @@ Layout.prototype = {
     let arrowKeysDiv = this.keys.makeArrows();
     this.rowsContainer.lastElementChild.appendChild(arrowKeysDiv);
   },
-}
-
-function makeKeys() {
-  KEY_FLEX_SIZES.forEach( row => {
-    row.forEach( size => {
-      let key = new Key('A', size);
-      div.appendChild(key.div);
-    });
-    this.container.keyRows.appendChild(div);
-  });
 }
 
 export default Layout;

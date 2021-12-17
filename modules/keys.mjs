@@ -1,5 +1,26 @@
 import Key from "./key.mjs"
 
+const KEY_CODES_BY_ROW = [
+  [
+    "Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6",
+    "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace"
+  ],
+  [
+    "Tab", "KeyQ", "KeyW", "KeyE", "KeyR", "KeyT", "KeyY", "KeyU", "KeyI",
+    "KeyO", "KeyP", "BracketLeft", "BracketRight", "Backslash"
+  ],
+  [
+    "CapsLock", "KeyA", "KeyS", "KeyD", "KeyF", "KeyG", "KeyH", "KeyJ",
+    "KeyK", "KeyL", "Semicolon", "Quote", "Enter"
+  ],
+  [
+    "ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ShiftRight"
+  ],
+  [
+    "fn", "ControlLeft", "AltLeft", "MetaLeft", "Space", "MetaRight", "AltRight"
+  ]
+];
+
 const ROWS = [
   "`1234567890-=".split('').concat("delete"),
   ["tab"].concat("qwertyuiop[]\\".split('')),
@@ -30,21 +51,21 @@ const DATA = [
     flexes: [2.413].concat(new Array(10).fill(1)).concat(2.413),
   },
   {
-    characters: ["fn", "control", "option", "command", null, "command", "option"],
+    characters: ["fn", "control", "option", "command", " ", "command", "option"],
     shifts: [null, null, "alt", "\u2318", null, "\u2318", "alt", null],
     flexes: [1, 1, 1, 1.24, 5.66, 1.25, 1],
   },
 ];
 
 const UNICODE_ARROWS = {
-  "up-arrow": "\u25B2",
-  "down-arrow": "\u25BC",
-  "left-arrow": "\u25C0",
-  "right-arrow": "\u25BA",
+  'ArrowUp': "\u25B2",
+  'ArrowLeft': "\u25C0",
+  'ArrowDown': "\u25BC",
+  'ArrowRight': "\u25BA",
 };
 
 function Keys() {
-  this.rows = ROWS;
+  this.codesByRow = KEY_CODES_BY_ROW;
   this.allKeys = [];
   this.makeKeys();
 }
@@ -53,11 +74,11 @@ Keys.prototype = {
   constructor: Keys,
 
   makeKeys() {
-    this.rows.forEach( (row, rowNumber) => {
+    this.codesByRow.forEach( (row, rowNumber) => {
       let rowData = DATA[rowNumber];
-      row.forEach( (key, keyNumber) => {
+      row.forEach( (code, keyNumber) => {
         let keyData = {
-          key: key,
+          code: code,
           character: rowData.characters[keyNumber],
           shift: rowData.shifts[keyNumber],
           flex: rowData.flexes[keyNumber],
@@ -86,22 +107,22 @@ Keys.prototype = {
   },
 
   makeTopArrow(topDiv) {
-    let key = this.makeArrow("up-arrow");
+    let key = this.makeArrow("ArrowUp");
     topDiv.appendChild(key.node);
   },
 
   makeBottomArrows(bottomDiv) {
-    let keyNames = ["left-arrow", "down-arrow", "right-arrow"];
-    keyNames.forEach( keyName => {
-      let key = this.makeArrow(keyName);
+    let keyNames = ["ArrowLeft", "ArrowDown", "ArrowRight"];
+    keyNames.forEach( keyCode => {
+      let key = this.makeArrow(keyCode);
       bottomDiv.appendChild(key.node);
     });
   },
 
-  makeArrow(name) {
+  makeArrow(code) {
     let arrow = {
-      key: name,
-      character: UNICODE_ARROWS[name],
+      code: code,
+      character: UNICODE_ARROWS[code],
       shift: null,
       flex: 0.3,
     }
@@ -112,7 +133,7 @@ Keys.prototype = {
   },
 
   getKey(key) {
-    return this.allKeys.find( k => k.id === key);
+    return this.allKeys.find( k => k.code === key);
   },
 }
 

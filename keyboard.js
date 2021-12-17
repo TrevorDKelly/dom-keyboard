@@ -27,16 +27,19 @@ JSKeyboard.prototype = {
   constructor: Keyboard,
 
   addEvents() {
-    document.addEventListener('keypress', pressKey);
+    document.addEventListener('keydown', keyDown);
+    document.addEventListener('keyup', keyUp);
   }
 }
 
-function pressKey(e) {
-  let key = document.querySelector(`[data-key='${e.key.toLowerCase()}']`);
-  setTimeout(() => {
-    key.classList.remove('keyboard-key-down');
-  }, 200);
+function keyDown(e) {
+  let key = document.querySelector(`[data-key='${e.code}']`);
   key.classList.add('keyboard-key-down');
+}
+
+function keyUp(e) {
+  let key = document.querySelector(`[data-key='${e.code}']`);
+  key.classList.remove('keyboard-key-down');
 }
 
 export default JSKeyboard;

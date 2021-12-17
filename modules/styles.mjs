@@ -37,7 +37,7 @@ const KEY_UP_CSS = {
 const KEY_DOWN_CSS = {
   position: 'relative',
   top: "0.2vw",
-  left: "-0.2vw",
+  left: "-0.1vw",
   boxShadow: "0 0 lightskyblue",
   borderBottom: "0 solid grey",
   transition: "all 0.2s",
@@ -48,7 +48,7 @@ const TWO_SYMBOL_KEYS_CSS = {
   justifyContent: "space-around",
 }
 
-const COMMAND_KEYS_CSS = {
+const CONTROL_KEYS_CSS = {
   fontSize: "0.6em",
   flexDirection: "column",
   justifyContent: "space-around",
@@ -100,7 +100,7 @@ addCSSClass('keyboard-key-down', KEY_DOWN_CSS);
 addCSSClass('keyboard-container', CONTAINER_CSS);
 addCSSClass('keyboard-all-rows', ALL_ROWS_CSS);
 addCSSClass('keyboard-single-row', ROW_CSS);
-addCSSClass('keyboard-key-command', COMMAND_KEYS_CSS);
+addCSSClass('keyboard-key-control', CONTROL_KEYS_CSS);
 addCSSClass('keyboard-key-number, .keyboard-key-special', TWO_SYMBOL_KEYS_CSS);
 addCSSClass('keyboard-arrows-container', ARROWS_CONTAINER_CSS);
 addCSSClass('keyboard-arrow-row', ARROW_ROW_CSS);
