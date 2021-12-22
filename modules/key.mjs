@@ -35,6 +35,21 @@ Key.prototype = {
     this.type = getType(this.code);
     this.node.classList.add(`keyboard-key-${this.type}`);
   },
+
+  down() {
+    this.node.classList.add('keyboard-key-down');
+  },
+
+  up() {
+    this.node.classList.remove('keyboard-key-down');
+  },
+
+  match(selected) {
+    return selected.includes(this.code)
+           || selected.includes(this.character)
+           || selected.includes(this.type)
+           || selected.includes(this.shift);
+  },
 };
 
 function getType(code) {
