@@ -40,7 +40,7 @@ const KEY_DOWN_CSS = {
   left: "-0.1vw",
   boxShadow: "0 0 lightskyblue",
   borderBottom: "0 solid grey",
-  transition: "all 0.2s",
+  transition: "all 0.1s",
 }
 
 const TWO_SYMBOL_KEYS_CSS = {
