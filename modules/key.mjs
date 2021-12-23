@@ -1,15 +1,11 @@
-const CONTROL_KEYS = [
-  "Tab", "Backspace", "Enter", "ShiftLeft", "ShiftRight", "ControlLeft", "fn",
-  "AltLeft", "MetaLeft", "MetaRight", "AltRight", "CapsLock"
-];
-
-function Key({ code, character, shift, flex }) {
+function Key({ code, character, shift, flex, side }) {
   this.code = code;
   this.node = document.createElement('div');
   this.node.classList.add('keyboard-key-up');
   this.node.style.flex = flex;
   this.character = character;
   this.shift = shift;
+  this.side = side;
   this.setType();
   this.setContent(code);
 }
@@ -45,12 +41,29 @@ Key.prototype = {
   },
 
   match(selected) {
-    return selected.includes(this.code)
-           || selected.includes(this.character)
-           || selected.includes(this.type)
-           || selected.includes(this.shift);
+    if (typeof selected === "Array") {
+      return selected.includes(this.code)
+             || selected.includes(this.character)
+             || selected.includes(this.type)
+             || selected.includes(this.shift);
+    } else {
+      return selected === this.code
+             || selected === this.character
+             || selected === this.type
+             || selected === this.shift;
+    }
+  },
+
+  press(time = 100) {
+    this.down();
+    setTimeout(() => this.up(), time);
   },
 };
+
+const CONTROL_KEYS = [
+  "Tab", "Backspace", "Enter", "ShiftLeft", "ShiftRight", "ControlLeft", "fn",
+  "AltLeft", "MetaLeft", "MetaRight", "AltRight", "CapsLock"
+];
 
 function getType(code) {
   if (code.includes("Arrow")) {

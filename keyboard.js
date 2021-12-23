@@ -31,8 +31,8 @@ JSKeyboard.prototype = {
     document.addEventListener('keyup', defaultKeyUp.bind(this));
   },
 
-  getKey(code) {
-    return this.keys.find(k => k.code === code);
+  getKey(selected) {
+    return this.keys.find(k => k.match(selected));
   },
 
   onKeyDown(...args) {
@@ -41,6 +41,19 @@ JSKeyboard.prototype = {
 
   onKeyUp(...args) {
     document.addEventListener('keyup', (e) => keyEvent.call(this, e, args));
+  },
+
+  press(selected, time = 100) {
+    let matches = this.keys.filter( key => key.match(selected));
+
+    if (matches.length === 1 && selected === matches[0].shift) {
+      let key = matches[0];
+      let shiftSide = key.side === "Left" ? "Right" : "Left";
+      this.getKey(`Shift${shiftSide}`).press(time * 2);
+      setTimeout(() => key.press(time), time);
+    } else {
+      matches.forEach(key => key.press(time));
+    }
   },
 }
 

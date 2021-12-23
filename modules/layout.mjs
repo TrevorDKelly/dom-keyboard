@@ -31,6 +31,7 @@ Layout.prototype = {
           character: rowData.characters[keyNumber],
           shift: rowData.shifts[keyNumber],
           flex: rowData.flexes[keyNumber],
+          side: rowData.sides[keyNumber],
         };
         let key = new Key(keyData);
         rowNode.appendChild(key.node);
@@ -79,6 +80,7 @@ Layout.prototype = {
       character: KEY_DATA.UNICODE_ARROWS[code],
       shift: null,
       flex: 0.3,
+      side: "Right",
     }
 
     let key = new Key(arrow);

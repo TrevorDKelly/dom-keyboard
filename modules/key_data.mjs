@@ -24,26 +24,31 @@ const KEY_DATA_BY_ROW = [
     characters: "`1234567890-=".split('').concat("delete"),
     shifts: "~!@#$%^&*()_+".split('').concat(null),
     flexes: (new Array(13).fill(1)).concat(1.5),
+    sides: (new Array(7).fill("Left")).concat(...(new Array(7).fill("Right"))),
   },
   {
     characters: ["tab"].concat("qwertyuiop[]\\".split('')),
     shifts: [null].concat("QWERTYUIOP{}|".split('')),
     flexes: [1.5].concat(new Array(13).fill(1)),
+    sides: (new Array(6).fill("Left")).concat(...(new Array(8).fill("Right"))),
   },
   {
     characters: ["caps"].concat("asdfghjkl;'".split('')).concat("return"),
     shifts: [null].concat("ASDFGHJKL:\"".split('')).concat("enter"),
     flexes: [1.8333].concat(new Array(11).fill(1)).concat(1.8333),
+    sides: (new Array(6).fill("Left")).concat(...(new Array(7).fill("Right"))),
   },
   {
     characters: ["shift"].concat("zxcvbnm,./".split('')).concat("shift"),
     shifts: [null].concat("ZXCVBNM<>?".split('')).concat(null),
     flexes: [2.413].concat(new Array(10).fill(1)).concat(2.413),
+    sides: (new Array(6).fill("Left")).concat(...(new Array(6).fill("Right"))),
   },
   {
     characters: ["fn", "control", "option", "command", " ", "command", "option"],
     shifts: [null, null, "alt", "\u2318", null, "\u2318", "alt", null],
     flexes: [1, 1, 1, 1.24, 5.66, 1.25, 1],
+    sides: (new Array(5).fill("Left")).concat(...(new Array(2).fill("Right"))),
   },
 ];
 
