@@ -55,6 +55,18 @@ JSKeyboard.prototype = {
       matches.forEach(key => key.press(time));
     }
   },
+
+  typeInto(node, text) {
+    let characters = text.split('');
+    let index = 0;
+    let interval = setInterval(() => {
+      let character = characters[index];
+      this.press(character);
+      node.innerHTML += character;
+      index += 1;
+      if (index >= characters.length) clearInterval(interval);
+    }, 200);
+  },
 }
 
 function defaultKeyDown(event) {
