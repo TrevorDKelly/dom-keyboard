@@ -6,14 +6,14 @@ An in-browser representation of a keyboard built out of DOM nodes. It includes s
 ## Structure
 [`DOMKeyboard`](#domkb) object
   Properties
-  -[node](#domkb-node)
-  -[keys](#domkb-keys)
+  - [node](#domkb-node)
+  - [keys](#domkb-keys)
   Methods
-  -[getKey](#domkb-getkey)
-  -[onKeyDown](#domkb-onbeydown)
-  -[onKeyUp](#domkb-onkeyup)
-  -[press](#domkb-press)
-  -[typeInto](#domkb-typeinto)
+  - [getKey](#domkb-getkey)
+  - [onKeyDown](#domkb-onbeydown)
+  - [onKeyUp](#domkb-onkeyup)
+  - [press](#domkb-press)
+  - [typeInto](#domkb-typeinto)
 [`Key`](#key) object
 
 ---
