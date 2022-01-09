@@ -17,13 +17,13 @@ function makeLayout(width, id) {
   return [layout.container, layout.allKeys];
 }
 
-function JSKeyboard(width, id) {
+function DOMKeyboard(width, id) {
   createCSSClasses();
   [this.node, this.keys] = makeLayout(width, id);
   this.addEvents();
 }
 
-JSKeyboard.prototype = {
+DOMKeyboard.prototype = {
   constructor: Keyboard,
 
   addEvents() {
@@ -87,9 +87,9 @@ function keyEvent(event, args) {
   let [selected, callback] = parseKeyEventArgs(args);
   let key = this.getKey(event.code);
 
-  if (!key.match(selected)) return;
-
-  callback(key);
+  if (selected === null || key.match(selected)) {
+    callback(key);
+  }
 }
 
 function parseKeyEventArgs(args) {
@@ -107,4 +107,4 @@ function parseKeyEventArgs(args) {
   return [selected, callback];
 }
 
-export default JSKeyboard;
+export default DOMKeyboard;
