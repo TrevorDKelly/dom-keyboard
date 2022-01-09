@@ -41,6 +41,8 @@ Key.prototype = {
   },
 
   match(selected) {
+    if (selected === null) return false;
+
     if (Array.isArray(selected)) {
       return selected.includes(this.code)
              || selected.includes(this.character)
