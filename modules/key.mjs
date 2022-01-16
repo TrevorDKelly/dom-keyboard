@@ -60,6 +60,10 @@ Key.prototype = {
     this.down();
     setTimeout(() => this.up(), time);
   },
+
+  style(cssStyle, newValue) {
+    this.node.style[cssStyle] = newValue
+  },
 };
 
 const CONTROL_KEYS = [

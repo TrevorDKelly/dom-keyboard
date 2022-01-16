@@ -29,6 +29,7 @@ An in-browser representation of a keyboard built out of DOM nodes. It includes s
     - [up](#key-down)
     - [match](#key-match)
     - [press](#key-press)
+    - [style](#key-style)
 ---
 
 ## Initializing
@@ -131,3 +132,12 @@ Checks whether `selected` matches the key's `code`, `character`, `shift`, or `ty
 
 - <a name="key-press">`press(time = 100)`</a><br>
 Calls the `Key.prototype.down` method then delays `time` milliseconds before calling `Key.prototype.up`
+
+- <a name="key-style">`style(cssStyle, newValue)`</a><br>
+Sets inline styles on the key's node using it's DOM Style Object.<br>
+To unset any added styles, set the value to `null`
+```javascript
+const t = kb.getKey("t");
+t.style("backgroundColor", "red")
+t.style("backgroundColor", null)
+```
