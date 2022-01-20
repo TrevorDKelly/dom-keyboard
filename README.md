@@ -33,11 +33,11 @@ An in-browser representation of a keyboard built out of DOM nodes. It includes s
 ---
 
 ## Initializing
-Call the `DOMKeyboard` constructor function with the width you want the keyboard to be and the DOM id you want it to have.<br>
+Call the `DOMKeyboard` constructor function with the width you want the keyboard to be and the DOM `id` attribute you want it to have.<br>
 The keyboard object has a `node` property that returns the DOM node for the keybaord
 
 ```javascript
-const kb = new Keybaord("100%", "my-keyboard");
+const kb = new DOMKeyboard("100%", "my-keyboard");
 document.body.appendChild(kb.node);
 ```
 
@@ -76,16 +76,16 @@ Specifies a callback to execute when a matching key is pressed. The callback rec
 Specifies a callback to execute when a matching key is released. The callback receives the matching `Key` object.<br>
 See `onKeyDown` for details.
 
-- <a name="domkb-press">`press(key, time = 100)`</a><br>
-presses a key on the DOMKeyboard and releases it after `time` milliseconds.<br>
+- <a name="domkb-press">`press(key, [time = 100])`</a><br>
+Presses a key on the DOMKeyboard and releases it after `time` milliseconds.<br>
 `key` is a string that uses `Key.prototype.match` to find all matching keys.<br>
 A shift key will also be pressed if `key` matches the `shift` property of the matching key.<br>
 NOTE: the `press` method does not create a keypress event in the DOM.
 
 - <a name="domkb-typeinto">`typeInto(node, text)`</a><br>
 Enters characters into `node` one character at a time while pressing the matching key on the DOMKeyboard. `DOMKeyboard.prototype.press` is used to press the keys.<br>
-`node` is a dom node.<br>
-`test` is a string that will be added one character at a time to the end of `nod`'s innerHTML
+`node` is a DOM node.<br>
+`text` is a string that will be added one character at a time to the end of `node`'s innerHTML
 
 
 ---
@@ -94,7 +94,7 @@ Enters characters into `node` one character at a time while pressing the matchin
 
 ### Properties
 
-- <a name="key-character">`chacracter`</a><br>
+- <a name="key-character">`character`</a><br>
 The main character for the key. A string.
 
 - <a name="key-code">`code`</a><br>
@@ -126,11 +126,11 @@ Adds the `keyboard-key-down` CSS class to the key's node.
 - <a name="key-up">`up()`</a><br>
 Removes the `keyboard-key-down` CSS class to the key's node.
 
-- <a name="key-match">`match(selected)` >> boolean</a><br>
+- <a name="key-match">`match(selected)` >> `boolean`</a><br>
 Checks whether `selected` matches the key's `code`, `character`, `shift`, or `type` property<br>
 `selected` can be a string or array of strings.
 
-- <a name="key-press">`press(time = 100)`</a><br>
+- <a name="key-press">`press([time = 100])`</a><br>
 Calls the `Key.prototype.down` method then delays `time` milliseconds before calling `Key.prototype.up`
 
 - <a name="key-style">`style(cssStyle, newValue)`</a><br>
