@@ -34,6 +34,7 @@ An in-browser representation of a keyboard built out of DOM nodes. It includes s
 
 ## Initializing
 Call the `DOMKeyboard` constructor function with the width you want the keyboard to be and the DOM `id` attribute you want it to have.<br>
+The width must be a percentage<br>
 The keyboard object has a `node` property that returns the DOM node for the keybaord
 
 ```javascript
