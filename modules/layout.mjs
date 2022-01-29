@@ -8,6 +8,18 @@ function assignStyles(width) {
   this.container.style.width = width;
   this.rowsContainer.classList.add('keyboard-all-rows');
   Style.createCSS(width);
+  setFontSize(this.container);
+}
+
+function setFontSize(container) {
+  const width = container.clientWidth
+  container.style.fontSize = `${container.clientWidth / 50}px`;
+  const resizeWatch = new ResizeObserver( () => {
+    const width = container.clientWidth
+    container.style.fontSize = `${container.clientWidth / 50}px`;
+  });
+
+  resizeWatch.observe(container);
 }
 
 function Layout(width, id) {

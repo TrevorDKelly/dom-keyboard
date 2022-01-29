@@ -52,6 +52,7 @@ CLASSES["keyboard-key-control"] = {
 }
 
 CLASSES["keyboard-container"] = {
+  fontFamily: "sans-serif",
   position: "relative",
   color: "white",
 };
@@ -105,7 +106,6 @@ const Style = {};
 
 Style.createCSS = function(width) {
   CLASSES["keyboard-container"].width = width;
-  CLASSES["keyboard-container"].font = `${(parseInt(width, 10) / 100) * 2}vw sans-serif`;
 
   Object.keys(CLASSES).forEach(cssClass => {
     addCSSClass(cssClass, CLASSES[cssClass]);
