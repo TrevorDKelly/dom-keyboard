@@ -1,12 +1,4 @@
 import Layout from "./modules/layout.mjs";
-import cssString from "./modules/styles.mjs";
-
-function createCSSClasses() {
-  let style = document.createElement('style');
-  style.type = 'text/css';
-  style.innerHTML = cssString;
-  document.head.appendChild(style);
-}
 
 let layouts = [];
 
@@ -18,7 +10,6 @@ function makeLayout(width, id) {
 }
 
 function DOMKeyboard(width, id) {
-  createCSSClasses();
   [this.node, this.keys] = makeLayout(width, id);
   this.addEvents();
 }

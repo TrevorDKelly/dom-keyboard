@@ -24,7 +24,9 @@ function convertToCssString(name) {
   return name;
 }
 
-const KEY_UP_CSS = {
+const CLASSES = {};
+
+CLASSES["keyboard-key-up"] = {
   backgroundColor: "black",
   borderRadius: "0.25em",
   display: "flex",
@@ -34,7 +36,7 @@ const KEY_UP_CSS = {
   boxShadow: "-0.2vw 0.2vw lightskyblue",
 }
 
-const KEY_DOWN_CSS = {
+CLASSES["keyboard-key-down"] = {
   position: 'relative',
   top: "0.2vw",
   left: "-0.1vw",
@@ -43,25 +45,22 @@ const KEY_DOWN_CSS = {
   transition: "all 0.1s",
 }
 
-const TWO_SYMBOL_KEYS_CSS = {
-  flexDirection: "column",
-  justifyContent: "space-around",
-}
-
-const CONTROL_KEYS_CSS = {
+CLASSES["keyboard-key-control"] = {
   fontSize: "0.6em",
   flexDirection: "column",
   justifyContent: "space-around",
 }
 
-const CONTAINER_CSS = {
+CLASSES["keyboard-container"] = {
   position: "relative",
-  paddingBottom: "34%",
-  font: "2vw sans-serif",
   color: "white",
 };
 
-const ALL_ROWS_CSS = {
+CLASSES["keyboard-sizing-container"] = {
+  paddingBottom: "34%",
+}
+
+CLASSES["keyboard-all-rows"] = {
   position: "absolute",
   top: 0,
   bottom: 0,
@@ -71,7 +70,7 @@ const ALL_ROWS_CSS = {
   flexDirection: "column",
 };
 
-const ROW_CSS = {
+CLASSES["keyboard-single-row"] = {
   display: "flex",
   gap: "1%",
   padding: "0.5%",
@@ -81,7 +80,7 @@ const ROW_CSS = {
   height: "20%",
 }
 
-const ARROWS_CONTAINER_CSS = {
+CLASSES["keyboard-arrows-container"] = {
   flex: 3.33,
   font: "0.5em serif",
   display: "flex",
@@ -89,20 +88,33 @@ const ARROWS_CONTAINER_CSS = {
   alignItems: "stretch",
 }
 
-const ARROW_ROW_CSS = {
+CLASSES["keyboard-arrow-row"] = {
   flex: 1,
   display: "flex",
   justifyContent: "space-around",
 }
 
-addCSSClass('keyboard-key-up', KEY_UP_CSS);
-addCSSClass('keyboard-key-down', KEY_DOWN_CSS);
-addCSSClass('keyboard-container', CONTAINER_CSS);
-addCSSClass('keyboard-all-rows', ALL_ROWS_CSS);
-addCSSClass('keyboard-single-row', ROW_CSS);
-addCSSClass('keyboard-key-control', CONTROL_KEYS_CSS);
-addCSSClass('keyboard-key-number, .keyboard-key-special', TWO_SYMBOL_KEYS_CSS);
-addCSSClass('keyboard-arrows-container', ARROWS_CONTAINER_CSS);
-addCSSClass('keyboard-arrow-row', ARROW_ROW_CSS);
+const TWO_SYMBOL_KEYS_CSS = {
+  flexDirection: "column",
+  justifyContent: "space-around",
+}
 
-export default cssString;
+addCSSClass('keyboard-key-number, .keyboard-key-special', TWO_SYMBOL_KEYS_CSS);
+
+const Style = {};
+
+Style.createCSS = function(width) {
+  CLASSES["keyboard-container"].width = width;
+  CLASSES["keyboard-container"].font = `${(parseInt(width, 10) / 100) * 2}vw sans-serif`;
+
+  Object.keys(CLASSES).forEach(cssClass => {
+    addCSSClass(cssClass, CLASSES[cssClass]);
+  });
+
+  let style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = cssString;
+  document.head.appendChild(style);
+};
+
+export default Style;

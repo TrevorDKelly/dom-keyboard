@@ -1,17 +1,22 @@
 import KEY_DATA from "./key_data.mjs";
 import Key from "./key.mjs";
+import Style from "./styles.mjs";
 
 function assignStyles(width) {
   this.container.classList.add('keyboard-container');
+  this.sizingContainer.classList.add('keyboard-sizing-container');
   this.container.style.width = width;
   this.rowsContainer.classList.add('keyboard-all-rows');
+  Style.createCSS(width);
 }
 
 function Layout(width, id) {
   this.container  = document.createElement('div');
   if (id) this.container.id = id;
+  this.sizingContainer = document.createElement('div');
   this.rowsContainer = document.createElement('div');
-  this.container.appendChild(this.rowsContainer);
+  this.container.appendChild(this.sizingContainer);
+  this.sizingContainer.appendChild(this.rowsContainer);
   this.allKeys = [];
   assignStyles.call(this, width);
 }
