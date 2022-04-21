@@ -42,29 +42,39 @@ DOMKeyboard.prototype = {
     document.addEventListener('keyup', (e) => keyEvent.call(this, e, args));
   },
 
-  press(selected, time = 100) {
+  async press(selected, time = 100) {
     let matches = this.keys.filter( key => key.match(selected));
 
     if (matches.length === 1 && selected === matches[0].shift) {
       let key = matches[0];
       let shiftSide = key.side === "Left" ? "Right" : "Left";
-      this.getKey(`Shift${shiftSide}`).press(time * 2);
-      setTimeout(() => key.press(time), time);
+      let shiftKey = this.getKey(`Shift${shiftSide}`);
+
+      await shiftKey.down();
+      await key.press(time);
+      await shiftKey.up();
     } else {
-      matches.forEach(key => key.press(time));
+      let promises = []
+      matches.forEach(key => {
+        let pressPromise = new Promise(async (resolve, reject) => {
+          await key.press(time);
+          resolve();
+        });
+        promises.push(pressPromise);
+      });
+      await Promise.all(promises);
     }
   },
 
-  typeInto(node, text) {
+  async typeInto(node, text) {
     let characters = text.split('');
     let index = 0;
-    let interval = setInterval(() => {
-      let character = characters[index];
-      this.press(character);
+    for (let i = 0; i < characters.length; i++) {
+      let key = this.getKey(characters[index]);
+      await key.down();
       node.innerHTML += character;
-      index += 1;
-      if (index >= characters.length) clearInterval(interval);
-    }, 200);
+      await key.up();
+    }
   },
 }
 
@@ -80,18 +90,14 @@ function setDefaults(options) {
   };
 }
 
-function defaultKeyDown(event) {
+async function defaultKeyDown(event) {
   let key = this.getKey(event.code);
-  key.down();
+  await key.down();
 }
 
-function defaultKeyUp(event) {
+async function defaultKeyUp(event) {
   let key = this.getKey(event.code);
-  key.up();
-}
-
-function keyMatch({ key, code }, selected) {
-  return selected.includes(key) || selected.includes(code);
+  await key.up();
 }
 
 function keyEvent(event, args) {
