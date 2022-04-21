@@ -68,12 +68,10 @@ DOMKeyboard.prototype = {
 
   async typeInto(node, text) {
     let characters = text.split('');
-    let index = 0;
     for (let i = 0; i < characters.length; i++) {
-      let key = this.getKey(characters[index]);
-      await key.down();
+      let character = characters[i];
+      await this.press(character);
       node.innerHTML += character;
-      await key.up();
     }
   },
 }
