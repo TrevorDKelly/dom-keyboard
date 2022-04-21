@@ -9,8 +9,14 @@ function makeLayout(width, id) {
   return [layout.container, layout.allKeys];
 }
 
-function DOMKeyboard(width, id) {
+function DOMKeyboard(width, id, options) {
+  if (typeof id !== "string") {
+    options = id;
+    id = undefined;
+  }
+
   [this.node, this.keys] = makeLayout(width, id);
+  this.options = setDefaults(options);
   this.addEvents();
 }
 
@@ -18,8 +24,10 @@ DOMKeyboard.prototype = {
   constructor: Keyboard,
 
   addEvents() {
-    document.addEventListener('keydown', defaultKeyDown.bind(this));
-    document.addEventListener('keyup', defaultKeyUp.bind(this));
+    if (this.options.reactToKeyPress) {
+      document.addEventListener('keydown', defaultKeyDown.bind(this));
+      document.addEventListener('keyup', defaultKeyUp.bind(this));
+    }
   },
 
   getKey(selected) {
@@ -58,6 +66,18 @@ DOMKeyboard.prototype = {
       if (index >= characters.length) clearInterval(interval);
     }, 200);
   },
+}
+
+function setDefaults(options) {
+  options ||= {};
+  let defaults = {
+    reactToKeyPress: true,
+  }
+
+  return {
+    ...defaults,
+    ...options,
+  };
 }
 
 function defaultKeyDown(event) {
