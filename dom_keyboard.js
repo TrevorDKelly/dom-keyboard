@@ -9,8 +9,14 @@ function makeLayout(width, id) {
   return [layout.container, layout.allKeys];
 }
 
-function DOMKeyboard(width, id) {
+function DOMKeyboard(width, id, options) {
+  if (typeof id !== "string") {
+    options = id;
+    id = undefined;
+  }
+
   [this.node, this.keys] = makeLayout(width, id);
+  this.options = setDefaults(options);
   this.addEvents();
 }
 
@@ -18,8 +24,10 @@ DOMKeyboard.prototype = {
   constructor: Keyboard,
 
   addEvents() {
-    document.addEventListener('keydown', defaultKeyDown.bind(this));
-    document.addEventListener('keyup', defaultKeyUp.bind(this));
+    if (this.options.reactToKeyPress) {
+      document.addEventListener('keydown', defaultKeyDown.bind(this));
+      document.addEventListener('keyup', defaultKeyUp.bind(this));
+    }
   },
 
   getKey(selected) {
@@ -34,44 +42,60 @@ DOMKeyboard.prototype = {
     document.addEventListener('keyup', (e) => keyEvent.call(this, e, args));
   },
 
-  press(selected, time = 100) {
+  async press(selected, time = 100) {
     let matches = this.keys.filter( key => key.match(selected));
 
     if (matches.length === 1 && selected === matches[0].shift) {
       let key = matches[0];
       let shiftSide = key.side === "Left" ? "Right" : "Left";
-      this.getKey(`Shift${shiftSide}`).press(time * 2);
-      setTimeout(() => key.press(time), time);
+      let shiftKey = this.getKey(`Shift${shiftSide}`);
+
+      await shiftKey.down();
+      await key.press(time);
+      await shiftKey.up();
     } else {
-      matches.forEach(key => key.press(time));
+      let promises = []
+      matches.forEach(key => {
+        let pressPromise = new Promise(async (resolve, reject) => {
+          await key.press(time);
+          resolve();
+        });
+        promises.push(pressPromise);
+      });
+      await Promise.all(promises);
     }
   },
 
-  typeInto(node, text) {
+  async typeInto(node, text) {
     let characters = text.split('');
-    let index = 0;
-    let interval = setInterval(() => {
-      let character = characters[index];
-      this.press(character);
+    for (let i = 0; i < characters.length; i++) {
+      let character = characters[i];
+      await this.press(character);
       node.innerHTML += character;
-      index += 1;
-      if (index >= characters.length) clearInterval(interval);
-    }, 200);
+    }
   },
 }
 
-function defaultKeyDown(event) {
-  let key = this.getKey(event.code);
-  key.down();
+function setDefaults(options) {
+  options ||= {};
+  let defaults = {
+    reactToKeyPress: true,
+  }
+
+  return {
+    ...defaults,
+    ...options,
+  };
 }
 
-function defaultKeyUp(event) {
+async function defaultKeyDown(event) {
   let key = this.getKey(event.code);
-  key.up();
+  await key.down();
 }
 
-function keyMatch({ key, code }, selected) {
-  return selected.includes(key) || selected.includes(code);
+async function defaultKeyUp(event) {
+  let key = this.getKey(event.code);
+  await key.up();
 }
 
 function keyEvent(event, args) {

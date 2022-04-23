@@ -1,9 +1,14 @@
 # DOM Keyboard
-An in-browser representation of a keyboard built out of DOM nodes. It includes simple methods for interacting with key presses and making visual changes to the keyboard along side them
+An in-browser representation of a keyboard built out of DOM nodes. It includes simple methods for interacting with key presses and making visual changes to the keyboard along side them.
+
+This project is open-source! Feel free to submit pull requests or suggest changes!
 
 ---
 
 ## Table of Contents
+- [Initializing](#initializing)
+  - [`options` object](#options)
+
 - [`DOMKeyboard`](#domkb) object
   - Properties
     - [keys](#domkb-keys)
@@ -32,15 +37,28 @@ An in-browser representation of a keyboard built out of DOM nodes. It includes s
     - [style](#key-style)
 ---
 
-## Initializing
-Call the `DOMKeyboard` constructor function with the width you want the keyboard to be and the DOM `id` attribute you want it to have.<br>
+## <a name="initializing">Initializing</a>
+Call the `DOMKeyboard` constructor function with the width you want the keyboard to be, an optional `id` attribute, and an optional `options`<br>
 The width must be a percentage<br>
+The `id` will be the DOM id of the keyboard<br>
+More on the `options` object below<br>
+
 The keyboard object has a `node` property that returns the DOM node for the keybaord
 
 ```javascript
-const kb = new DOMKeyboard("100%", "my-keyboard");
+const kb = new DOMKeyboard("100%", "my-keyboard", [options]);
 document.body.appendChild(kb.node);
 ```
+
+### <a name="options">`options`</a>
+A javascript object with the following optional properties:
+
+- `reactToKeyPress`
+boolean<br>
+Default: `true`<br>
+Determines if the keys of the DOMKeyboard are pressed when a user presses a key on their keybaord.
+
+<em>(Currently there is only one option, more are set to be added in future updates)<em>
 
 ---
 
@@ -60,7 +78,7 @@ The DOM `<div>` node holding the keyboard.
 Takes a string as an argument and uses `Key.prototype.match` to return the first matching `Key`.
 
 - <a name="domkb-onkeydown">`onKeyDown([...matches], callback)`</a><br>
-Specifies a callback to execute when a matching key is pressed. The callback receives the matching `Key` object.<br>
+Specifies a callback to execute when a matching key is pressed on a user's keyboard. The callback receives the matching `Key` object.<br>
 `matches` can be a string matching any property of a `Key` object, a series of such strings, or an array of such strings.<br>
   ```javascript
   kb.onKeyDown("t", (key) => console.log(key.code));
@@ -74,19 +92,21 @@ Specifies a callback to execute when a matching key is pressed. The callback rec
   ```
 
 - <a name="domkb-onkeyup">`onKeyUp([...matches], callback)`</a><br>
-Specifies a callback to execute when a matching key is released. The callback receives the matching `Key` object.<br>
+Specifies a callback to execute when a matching key is released on a user's keyboard. The callback receives the matching `Key` object.<br>
 See `onKeyDown` for details.
 
-- <a name="domkb-press">`press(key, [time = 100])`</a><br>
+- <a name="domkb-press">`press(key, [time = 100])` >> `Promise`</a><br>
 Presses a key on the DOMKeyboard and releases it after `time` milliseconds.<br>
+The returned `Promise` is resolved after the key has been pressed and released in the DOMKeyboard.<br>
 `key` is a string that uses `Key.prototype.match` to find all matching keys.<br>
 A shift key will also be pressed if `key` matches the `shift` property of the matching key.<br>
 NOTE: the `press` method does not create a keypress event in the DOM.
 
-- <a name="domkb-typeinto">`typeInto(node, text)`</a><br>
+- <a name="domkb-typeinto">`typeInto(node, text)` >> `Promise`</a><br>
 Enters characters into `node` one character at a time while pressing the matching key on the DOMKeyboard. `DOMKeyboard.prototype.press` is used to press the keys.<br>
 `node` is a DOM node.<br>
 `text` is a string that will be added one character at a time to the end of `node`'s innerHTML
+The returned `Promise` is resolved after the full `text` has been typed into the `node`<br>
 
 
 ---
@@ -121,18 +141,21 @@ One of the following:
 
 ### Methods
 
-- <a name="key-down">`down()`</a><br>
-Adds the `keyboard-key-down` CSS class to the key's node.
+- <a name="key-down">`down()` >> `Promise`</a><br>
+Adds the `keyboard-key-down` CSS class to the key's node.<br>
+The returned `Promise` is resolved after the key down animation has finished.
 
-- <a name="key-up">`up()`</a><br>
-Removes the `keyboard-key-down` CSS class to the key's node.
+- <a name="key-up">`up()` >> `Promise`</a><br>
+Removes the `keyboard-key-down` CSS class to the key's node.<br>
+The returned `Promise` is resolved after the key up animation has finished.
 
 - <a name="key-match">`match(selected)` >> `boolean`</a><br>
 Checks whether `selected` matches the key's `code`, `character`, `shift`, or `type` property<br>
 `selected` can be a string or array of strings.
 
-- <a name="key-press">`press([time = 100])`</a><br>
-Calls the `Key.prototype.down` method then delays `time` milliseconds before calling `Key.prototype.up`
+- <a name="key-press">`press([time = 100])` >> `Promise`</a><br>
+Calls the `Key.prototype.down` method then delays `time` milliseconds before calling `Key.prototype.up`<br>
+The returned `Promise` is resolved after the key down and key up animaition have finished.
 
 - <a name="key-style">`style(cssStyle, newValue)`</a><br>
 Sets inline styles on the key's node using it's DOM Style Object.<br>
