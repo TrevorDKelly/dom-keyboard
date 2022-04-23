@@ -1,7 +1,7 @@
 # DOM Keyboard
-An in-browser representation of a keyboard built out of DOM nodes. It includes simple methods for interacting with key presses and making visual changes to the keyboard along side them.
+An in-browser representation of a keyboard built out of DOM nodes. It includes simple methods for interacting with key presses and making visual changes to the keyboard along side them. Open-source with zero dependencies.
 
-This project is open-source! Feel free to submit pull requests or suggest changes!
+This project is open-source! Feel free to submit pull requests or suggest changes, and check the github issues for ways to contribute!
 
 ### Install
 `npm install dom-keyboard`
