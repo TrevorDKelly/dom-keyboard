@@ -81,7 +81,7 @@ DOMKeyboard.prototype = {
       if (variability) {
         speed = randomSpeed(min, max);
       }
-      callback(this.getKey(character));
+      if (callback) callback(this.getKey(character));
       await this.press(character, speed);
       node.innerHTML += character;
     }
