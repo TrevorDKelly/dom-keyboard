@@ -167,9 +167,9 @@ The returned `Promise` is resolved after the key down and key up animaition have
 
 - <a name="key-style">`style(cssStyle, newValue)`</a><br>
 Sets inline styles on the key's node using it's DOM Style Object.<br>
-To unset any added styles, set the value to `null`
-```javascript
-const t = kb.getKey("t");
-t.style("backgroundColor", "red")
-t.style("backgroundColor", null)
-```
+To unset any added styles, set the value to `null`.
+  ```javascript
+  const t = kb.getKey("t");
+  t.style("backgroundColor", "red")
+  t.style("backgroundColor", null)
+  ```
