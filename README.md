@@ -102,12 +102,14 @@ The returned `Promise` is resolved after the key has been pressed and released i
 A shift key will also be pressed if `key` matches the `shift` property of the matching key.<br>
 NOTE: the `press` method does not create a keypress event in the DOM.
 
-- <a name="domkb-typeinto">`typeInto(node, text, [speed = 100], [variability = 0])` >> `Promise`</a><br>
+- <a name="domkb-typeinto">`typeInto(node, text, [speed = 100], [variability = 0], [callback])` >> `Promise`</a><br>
 Enters characters into `node` one character at a time while pressing the matching key on the DOMKeyboard. `DOMKeyboard.prototype.press` is used to press the keys.<br>
 `node` is a DOM node.<br>
 `text` is a string that will be added one character at a time to the end of `node`'s innerHTML<br>
 `speed` is the time between key presses in milliseconds<br>
-`variability` is a time in milliseconds that the `speed` will randomly vary by to imitate inconsistent typing speed. If provided, a random number between `speed - variability` and `speed + variability` will be chosen for each key press.<br>
+`variability` is a time in milliseconds that the `speed` will randomly vary by to imitate inconsistent typing speed. If provided, a random number between `speed - variability` and `speed + variability` will be chosen for each key press. A `speed` must be specified in order to provide a `variability`<br>
+`callback` is an optional function that is called as each key is pressed. It is passed the `Key` object that is being pressed as an argument.<br>
+`speed`, `variability`, and `callback` are all optional. `callback` must be the last argument if provided.
 The returned `Promise` is resolved after the full `text` has been typed into the `node`<br>
 
 
