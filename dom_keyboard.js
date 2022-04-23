@@ -68,17 +68,17 @@ DOMKeyboard.prototype = {
 
   async typeInto(node, text, ...rest) {
     let characters = text.split('');
-    let [speed, variation, callback] = parseTypeIntoArgs(rest);
+    let [speed, variability, callback] = parseTypeIntoArgs(rest);
     let min;
     let max;
     if (variation > 0) {
-      min = speed - variation;
-      max = speed + variation;
+      min = speed - variability;
+      max = speed + variability;
     }
 
     for (let i = 0; i < characters.length; i++) {
       let character = characters[i];
-      if (variation) {
+      if (variability) {
         speed = randomSpeed(min, max);
       }
       callback(this.getKey(character));
