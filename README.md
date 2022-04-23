@@ -3,6 +3,9 @@ An in-browser representation of a keyboard built out of DOM nodes. It includes s
 
 This project is open-source! Feel free to submit pull requests or suggest changes!
 
+### Install
+`npm install dom-keyboard`
+
 ---
 
 ## Table of Contents
