@@ -95,11 +95,13 @@ Specifies a callback to execute when a matching key is pressed on a user's keybo
 Specifies a callback to execute when a matching key is released on a user's keyboard. The callback receives the matching `Key` object.<br>
 See `onKeyDown` for details.
 
-- <a name="domkb-press">`press(key, [time = 100])` >> `Promise`</a><br>
+- <a name="domkb-press">`press(key, [time = 100], [calback])` >> `Promise`</a><br>
 Presses a key on the DOMKeyboard and releases it after `time` milliseconds.<br>
 The returned `Promise` is resolved after the key has been pressed and released in the DOMKeyboard.<br>
 `key` is a string that uses `Key.prototype.match` to find all matching keys.<br>
 A shift key will also be pressed if `key` matches the `shift` property of the matching key.<br>
+`callback` is an optional function that is called as each key is pressed. It is passed the `Key` object that is being pressed as an argument.<br>
+`time` and `callback` are all optional. `callback` must be the last argument if provided.<br>
 NOTE: the `press` method does not create a keypress event in the DOM.
 
 - <a name="domkb-typeinto">`typeInto(node, text, [speed = 100], [variability = 0], [callback])` >> `Promise`</a><br>
@@ -109,7 +111,7 @@ Enters characters into `node` one character at a time while pressing the matchin
 `speed` is the time between key presses in milliseconds<br>
 `variability` is a time in milliseconds that the `speed` will randomly vary by to imitate inconsistent typing speed. If provided, a random number between `speed - variability` and `speed + variability` will be chosen for each key press. A `speed` must be specified in order to provide a `variability`<br>
 `callback` is an optional function that is called as each key is pressed. It is passed the `Key` object that is being pressed as an argument.<br>
-`speed`, `variability`, and `callback` are all optional. `callback` must be the last argument if provided.
+`speed`, `variability`, and `callback` are all optional. `callback` must be the last argument if provided.<br>
 The returned `Promise` is resolved after the full `text` has been typed into the `node`<br>
 
 
