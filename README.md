@@ -41,13 +41,12 @@ This project is open-source! Feel free to submit pull requests or suggest change
 ---
 
 ## <a name="initializing">Initializing</a>
-Call the `DOMKeyboard` constructor function with the width you want the keyboard to be, an optional `id` attribute, and an optional `options`<br>
-The width must be a percentage<br>
-The `id` will be the DOM id of the keyboard<br>
-More on the `options` object below<br>
+Call the `DOMKeyboard` constructor function with the width you want the keyboard to be, an optional `id` attribute, and an optional `options` object.<br>
+The width must be a percentage.<br>
+The `id` will be the DOM id of the keyboard.<br>
+More on the `options` object below.<br>
 
-The keyboard object has a `node` property that returns the DOM node for the keybaord
-
+The keyboard object has a `node` property that returns the DOM node for the keybaord.
 ```javascript
 const kb = new DOMKeyboard("100%", "my-keyboard", [options]);
 document.body.appendChild(kb.node);
@@ -56,12 +55,12 @@ document.body.appendChild(kb.node);
 ### <a name="options">`options`</a>
 A javascript object with the following optional properties:
 
-- `reactToKeyPress`
+- `reactToKeyPress`<br>
 boolean<br>
 Default: `true`<br>
 Determines if the keys of the DOMKeyboard are pressed when a user presses a key on their keybaord.
 
-<em>(Currently there is only one option, more are set to be added in future updates)<em>
+<em>(Currently there is only one option, more are set to be added in future updates)</em>
 
 ---
 
