@@ -42,8 +42,13 @@ DOMKeyboard.prototype = {
     document.addEventListener('keyup', (e) => keyEvent.call(this, e, args));
   },
 
-  async press(selected, time = 100) {
+  async press(selected, ...args) {
     let matches = this.keys.filter( key => key.match(selected));
+    let [time, callback] = parseTwoArgsForCallback(args);
+    if (!time) {
+      time = 100;
+    }
+    const halfTime = time / 2;
 
     if (matches.length === 1 && selected === matches[0].shift) {
       let key = matches[0];
@@ -51,13 +56,17 @@ DOMKeyboard.prototype = {
       let shiftKey = this.getKey(`Shift${shiftSide}`);
 
       await shiftKey.down();
-      await key.press(time);
+      await key.down(halfTime);
+      if (callback) callback(key);
+      await key.up(halfTime);
       await shiftKey.up();
     } else {
       let promises = []
       matches.forEach(key => {
         let pressPromise = new Promise(async (resolve, reject) => {
-          await key.press(time);
+          await key.down(halfTime);
+          if (callback) callback(key);
+          await key.up(halfTime);
           resolve();
         });
         promises.push(pressPromise);
@@ -66,22 +75,25 @@ DOMKeyboard.prototype = {
     }
   },
 
-  async typeInto(node, text, speed = 100, variation = 0) {
+  async typeInto(node, text, ...rest) {
     let characters = text.split('');
+    let [speed, variability, callback] = parseTypeIntoArgs(rest);
     let min;
     let max;
-    if (variation > 0) {
-      min = speed - variation;
-      max = speed + variation;
+    if (variability > 0) {
+      min = speed - variability;
+      max = speed + variability;
     }
 
     for (let i = 0; i < characters.length; i++) {
       let character = characters[i];
-      if (variation) {
+      if (variability) {
         speed = randomSpeed(min, max);
       }
-      await this.press(character, speed);
-      node.innerHTML += character;
+      await this.press(character, speed, (key) => {
+        node.innerHTML += character;
+        callback(key);
+      });
     }
   },
 }
@@ -109,7 +121,7 @@ async function defaultKeyUp(event) {
 }
 
 function keyEvent(event, args) {
-  let [selected, callback] = parseKeyEventArgs(args);
+  let [selected, callback] = parseTwoArgsForCallback(args);
   let key = this.getKey(event.code);
 
   if (selected === null || key.match(selected)) {
@@ -117,7 +129,7 @@ function keyEvent(event, args) {
   }
 }
 
-function parseKeyEventArgs(args) {
+function parseTwoArgsForCallback(args) {
   let selected;
   let callback;
 
@@ -130,6 +142,25 @@ function parseKeyEventArgs(args) {
   }
 
   return [selected, callback];
+}
+
+function parseTypeIntoArgs(args) {
+  let speed = 100;
+  let variability = 0;
+  let callback;
+
+  if (typeof args[0] === 'function') {
+    callback = args[0];
+  } else if (typeof args[1] === 'function') {
+    speed = args[0];
+    callback = args[1];
+  } else {
+    speed = args[0];
+    variability = args[1];
+    callback = args[2];
+  }
+
+  return [speed, variability, callback]
 }
 
 function randomSpeed(min, max) {
