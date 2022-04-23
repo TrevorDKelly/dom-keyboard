@@ -71,7 +71,7 @@ DOMKeyboard.prototype = {
     let [speed, variability, callback] = parseTypeIntoArgs(rest);
     let min;
     let max;
-    if (variation > 0) {
+    if (variability > 0) {
       min = speed - variability;
       max = speed + variability;
     }
