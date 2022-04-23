@@ -42,8 +42,13 @@ DOMKeyboard.prototype = {
     document.addEventListener('keyup', (e) => keyEvent.call(this, e, args));
   },
 
-  async press(selected, time = 100) {
+  async press(selected, ...args) {
     let matches = this.keys.filter( key => key.match(selected));
+    let [time, callback] = parseTwoArgsForCallback(args);
+    if (!time) {
+      time = 100;
+    }
+    const halfTime = time / 2;
 
     if (matches.length === 1 && selected === matches[0].shift) {
       let key = matches[0];
@@ -51,13 +56,17 @@ DOMKeyboard.prototype = {
       let shiftKey = this.getKey(`Shift${shiftSide}`);
 
       await shiftKey.down();
-      await key.press(time);
+      await key.down(halfTime);
+      if (callback) callback(key);
+      await key.up(halfTime);
       await shiftKey.up();
     } else {
       let promises = []
       matches.forEach(key => {
         let pressPromise = new Promise(async (resolve, reject) => {
-          await key.press(time);
+          await key.down(halfTime);
+          if (callback) callback(key);
+          await key.up(halfTime);
           resolve();
         });
         promises.push(pressPromise);
@@ -81,9 +90,10 @@ DOMKeyboard.prototype = {
       if (variability) {
         speed = randomSpeed(min, max);
       }
-      if (callback) callback(this.getKey(character));
-      await this.press(character, speed);
-      node.innerHTML += character;
+      await this.press(character, speed, (key) => {
+        node.innerHTML += character;
+        callback(key);
+      });
     }
   },
 }
@@ -111,7 +121,7 @@ async function defaultKeyUp(event) {
 }
 
 function keyEvent(event, args) {
-  let [selected, callback] = parseKeyEventArgs(args);
+  let [selected, callback] = parseTwoArgsForCallback(args);
   let key = this.getKey(event.code);
 
   if (selected === null || key.match(selected)) {
@@ -119,7 +129,7 @@ function keyEvent(event, args) {
   }
 }
 
-function parseKeyEventArgs(args) {
+function parseTwoArgsForCallback(args) {
   let selected;
   let callback;
 
