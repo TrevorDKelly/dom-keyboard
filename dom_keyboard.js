@@ -66,11 +66,21 @@ DOMKeyboard.prototype = {
     }
   },
 
-  async typeInto(node, text) {
+  async typeInto(node, text, speed = 100, variation = 0) {
     let characters = text.split('');
+    let min;
+    let max;
+    if (variation > 0) {
+      min = speed - variation;
+      max = speed + variation;
+    }
+
     for (let i = 0; i < characters.length; i++) {
       let character = characters[i];
-      await this.press(character);
+      if (variation) {
+        speed = randomSpeed(min, max);
+      }
+      await this.press(character, speed);
       node.innerHTML += character;
     }
   },
@@ -120,6 +130,10 @@ function parseKeyEventArgs(args) {
   }
 
   return [selected, callback];
+}
+
+function randomSpeed(min, max) {
+  return min + (Math.floor(Math.random() * (max - min)));
 }
 
 export default DOMKeyboard;

@@ -102,10 +102,12 @@ The returned `Promise` is resolved after the key has been pressed and released i
 A shift key will also be pressed if `key` matches the `shift` property of the matching key.<br>
 NOTE: the `press` method does not create a keypress event in the DOM.
 
-- <a name="domkb-typeinto">`typeInto(node, text)` >> `Promise`</a><br>
+- <a name="domkb-typeinto">`typeInto(node, text, [speed = 100], [variability = 0])` >> `Promise`</a><br>
 Enters characters into `node` one character at a time while pressing the matching key on the DOMKeyboard. `DOMKeyboard.prototype.press` is used to press the keys.<br>
 `node` is a DOM node.<br>
-`text` is a string that will be added one character at a time to the end of `node`'s innerHTML
+`text` is a string that will be added one character at a time to the end of `node`'s innerHTML<br>
+`speed` is the time between key presses in milliseconds<br>
+`variability` is a time in milliseconds that the `speed` will randomly vary by to imitate inconsistent typing speed. If provided, a random number between `speed - variability` and `speed + variability` will be chosen for each key press.<br>
 The returned `Promise` is resolved after the full `text` has been typed into the `node`<br>
 
 
@@ -141,13 +143,13 @@ One of the following:
 
 ### Methods
 
-- <a name="key-down">`down()` >> `Promise`</a><br>
+- <a name="key-down">`down([time = 100])` >> `Promise`</a><br>
 Adds the `keyboard-key-down` CSS class to the key's node.<br>
-The returned `Promise` is resolved after the key down animation has finished.
+The returned `Promise` is resolved after `time` milliseconds.
 
-- <a name="key-up">`up()` >> `Promise`</a><br>
+- <a name="key-up">`up([time = 100])` >> `Promise`</a><br>
 Removes the `keyboard-key-down` CSS class to the key's node.<br>
-The returned `Promise` is resolved after the key up animation has finished.
+The returned `Promise` is resolved after `time` milliseconds.
 
 - <a name="key-match">`match(selected)` >> `boolean`</a><br>
 Checks whether `selected` matches the key's `code`, `character`, `shift`, or `type` property<br>

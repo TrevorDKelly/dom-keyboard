@@ -1,5 +1,3 @@
-const PRESS_TIME = 100;
-
 function Key({ code, character, shift, flex, side }) {
   this.code = code;
   this.node = document.createElement('div');
@@ -34,21 +32,21 @@ Key.prototype = {
     this.node.classList.add(`keyboard-key-${this.type}`);
   },
 
-  down() {
+  down(time = 100) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.node.classList.add('keyboard-key-down');
         resolve();
-      }, PRESS_TIME);
+      }, time);
     });
   },
 
-  up() {
+  up(time = 100) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         this.node.classList.remove('keyboard-key-down');
         resolve();
-      }, PRESS_TIME);
+      }, time);
     });
   },
 
@@ -70,9 +68,9 @@ Key.prototype = {
 
   press(time = 100) {
     return new Promise(async (resolve, reject) => {
-      await this.down()
+      await this.down(time / 2)
       setTimeout(async () => {
-        await this.up()
+        await this.up(time / 2)
         resolve();
       }, time);
     });
