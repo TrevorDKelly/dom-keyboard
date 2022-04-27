@@ -92,7 +92,7 @@ DOMKeyboard.prototype = {
       }
       await this.press(character, speed, (key) => {
         node.innerHTML += character;
-        callback(key);
+        if (callback) callback(key);
       });
     }
   },
@@ -125,7 +125,7 @@ function keyEvent(event, args) {
   let key = this.getKey(event.code);
 
   if (selected === null || key.match(selected)) {
-    callback(key);
+    if(callback) callback(key);
   }
 }
 
